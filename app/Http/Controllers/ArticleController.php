@@ -26,7 +26,7 @@ function __construct(){
     public function index()
     {
         //get articles
-        $articles = Article::paginate(35);
+        $articles = Article::all();
         //return as a resource
         return ArticleResource::collection($articles);
     }

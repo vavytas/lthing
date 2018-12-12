@@ -18,7 +18,7 @@ class Comment extends Resource
             'id'=>$this->id,
             'body'=> $this->body,
             'post_id'=>$this->post_id,
-
+            'by_user'=>$this->post_id,
         ];
     }
 }
