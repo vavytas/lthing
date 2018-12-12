@@ -12,6 +12,12 @@ use Illuminate\Database\Eloquent\Builder;
 
 class ArticleController extends Controller
 {
+
+function __construct(){
+    return $this->middleware('auth:api');
+}
+
+
     /**
      * Display a listing of the resource.
      *
