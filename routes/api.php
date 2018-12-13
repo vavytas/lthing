@@ -30,3 +30,4 @@ Route::put('article', 'ArticleController@store');
 Route::delete('article/{id}', 'ArticleController@destroy');
 
 Route::apiResource('articleinfo', 'Api\ArticleinfoController');
+Route::put('articleinfos', 'Api\ArticleinfoController@store2');
