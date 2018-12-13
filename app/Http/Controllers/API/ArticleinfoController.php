@@ -11,7 +11,7 @@ use App\Http\Resources\Article as ArticleResource;
 use App\Comment;
 use App\Http\Resources\Comment as CommentResource;
 use Illuminate\Database\Eloquent\Builder;
-
+use App\Exceptions\Handler;
 
 
 
@@ -24,7 +24,9 @@ class ArticleinfoController extends Controller
      */
     public function index()
     {
-        //
+        $comments = Comment::all();
+        //return as a resource
+        return CommentResource::collection($comments);
     }
 
     /**
@@ -75,6 +77,16 @@ class ArticleinfoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        
+    
+        
+        $article = Article::findOrFail($id);
+        
+        
+
+        if($article->delete()){
+            return new ArticleResource($article);
+        }
+    
     }
 }

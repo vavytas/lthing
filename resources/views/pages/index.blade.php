@@ -1,7 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1>Welcome to the site</h1>   
+    <div class="jumbotron text-center">
+        <h1>Welcome To the site!</h1>
+        <p><a class="btn btn-primary btn-lg" href="/login" role="button">Login</a> <a class="btn btn-success btn-lg" href="/register" role="button">Register</a></p>
+    </div>
 @endsection
-
- 
