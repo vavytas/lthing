@@ -52,7 +52,7 @@ class ArticleinfoController extends Controller
 
     public function show2($id)
     {
-        $article = Article::findOrFail($id)->with('comment')->where('id', $id)->get();
+        $article = Article::findOrFail($id);
         return $article;
     }
     /**
