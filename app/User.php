@@ -30,9 +30,12 @@ class User extends Authenticatable
 
     public function comment(){
 
-        return $this->belongsTo(Comment::class);
+        return $this->hasMany(Comment::class);
 
     }
 
-
+    public function article()
+    {
+        return $this->hasMany(Article::class);
+    }
 }

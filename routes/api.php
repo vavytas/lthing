@@ -28,3 +28,5 @@ Route::post('article', 'ArticleController@store');
 Route::put('article', 'ArticleController@store');
 
 Route::delete('article/{id}', 'ArticleController@destroy');
+
+Route::apiResource('articleinfo', 'Api\ArticleinfoController');

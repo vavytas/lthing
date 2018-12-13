@@ -55,6 +55,7 @@ function __construct(){
         $article->id = $request->input('article_id');
         $article->title = $request->input('title');
         $article->body = $request->input('body');
+        $article->userc_id = $request->user()->id;
         if($article->save()){
             return new ArticleResource($article);
         }
@@ -68,9 +69,14 @@ function __construct(){
      */
     public function show($id)
     {
-        $article = Article::findOrFail($id);
+        $article = Article::findOrFail($id)->with('comment')->where('id', $id)->get();
+       // $articlec = Article::find($id)->comment;
+        //$art = $article->with($articlec);
         //return article
-        return new ArticleResource($article);
+        //return new ArticleResource($article);
+        //$articles = Article::where($id = $article->id)->get();
+        return $article; 
+        //CartItem::where('id_cart', $carrinho->id)->with('product.images')->get();
         //return new ArticleResource($article);
     }
 
@@ -109,6 +115,7 @@ function __construct(){
         $article = Article::findOrFail($id);
         
         
+
         if($article->delete()){
             return new ArticleResource($article);
         }
