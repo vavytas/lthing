@@ -12,11 +12,23 @@ use App\Comment;
 use App\Http\Resources\Comment as CommentResource;
 use Illuminate\Database\Eloquent\Builder;
 use App\Exceptions\Handler;
+use \Auth;
+use Illuminate\Auth\AuthenticationException;
+
+
 
 
 
 class ArticleinfoController extends Controller
 {
+
+    function __construct(){
+        return $this->middleware('auth:api');
+    }
+
+
+
+
     /**
      * Display a listing of the resource.
      *
@@ -35,9 +47,18 @@ class ArticleinfoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $post_id)
     {
-        //
+        $comment = $request->isMethod('put') ? Comment::findOrFail
+        ($request->comment_id) : new Comment;
+        $comment->id = $request->input('comment_id');
+        $comment->body = $request->input('body');
+        $comment->by_id = Auth::user()->id;
+        $comment->post_id = $post_id;
+        
+        if($comment->save()){
+            return new CommentResource($comment);
+        }
     }
 
     /**
@@ -75,17 +96,23 @@ class ArticleinfoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($a, $id)
     {
         
     
-        
-        $article = Article::findOrFail($id);
-        
+        try {
+            $comment = Comment::findOrFail($id);
+          }
+          catch (\Exception $e) {
+            report($e);
+            //abort(500);
+            return $e->getMessage();
+            
+          }
         
 
-        if($article->delete()){
-            return new ArticleResource($article);
+        if($comment->delete()){
+            return new CommentResource($comment);
         }
     
     }

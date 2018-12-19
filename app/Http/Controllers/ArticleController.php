@@ -11,6 +11,7 @@ use App\Http\Resources\Comment as CommentResource;
 use Illuminate\Database\Eloquent\Builder;
 use App\Exceptions\Handler;
 use Illuminate\Auth\AuthenticationException;
+
 class ArticleController extends Controller
 {
 
@@ -70,7 +71,14 @@ function __construct(){
      */
     public function show($id)
     {
-        $article = Article::findOrFail($id)->with('comment')->where('id', $id)->get();
+        try {
+            $article = Article::findOrFail($id)->with('comment')->where('id', $id)->get();
+          }
+          catch (\Exception $e) {
+            
+            return $e->getMessage();
+          }
+        
        // $articlec = Article::find($id)->comment;
         //$art = $article->with($articlec);
         //return article
@@ -112,11 +120,14 @@ function __construct(){
      */
     public function destroy($id)
     {
-        
-        $article = Article::findOrFail($id);
-        
-        
-
+        try {
+            $article = Article::findOrFail($id);
+          }
+          catch (\Exception $e) {
+            
+            return $e->getMessage();
+          }
+      
         if($article->delete()){
             return new ArticleResource($article);
         }

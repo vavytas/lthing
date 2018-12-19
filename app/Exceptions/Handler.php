@@ -4,7 +4,7 @@ namespace App\Exceptions;
 
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-
+use Illuminate\Auth\AuthenticationException;
 class Handler extends ExceptionHandler
 {
     /**
@@ -48,17 +48,17 @@ class Handler extends ExceptionHandler
      * @return \Illuminate\Http\Response
      */
     public function render($request, Exception $e)
-{
-    if ($e instanceof ModelNotFoundException)
     {
-        if ($request->ajax())
-        {
-            return response()->toJson([
-                'message' => 'Record not found',
-            ], 404);
+        if (!method_exists($e, 'getStatusCode') || !$request->wantsJson()) {
+            return parent::render($request, $e);
         }
+    
+        return response()->json([
+            'error' => $e->getStatusCode(),
+            'message' => $e->getMessage(),
+        ], $e->getStatusCode());
     }
 
-    return parent::render($request, $e);
-}
+
+
 }

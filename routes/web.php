@@ -17,6 +17,7 @@
 
 Route::get('/', 'PagesController@index');
 Route::get('/about', 'PagesController@about');
+Route::get('/first', 'PagesController@first');
 
 Auth::routes();
 

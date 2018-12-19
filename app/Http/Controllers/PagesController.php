@@ -22,4 +22,9 @@ class PagesController extends Controller
         return view('pages.about');
     }
 
+    public function first()
+    {
+        return view('pages.first');
+    }
+
 }

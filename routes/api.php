@@ -29,5 +29,7 @@ Route::put('article', 'ArticleController@store');
 
 Route::delete('article/{id}', 'ArticleController@destroy');
 
-Route::apiResource('articleinfo', 'Api\ArticleinfoController');
-Route::get('articlecoments', 'ArticleinfoController@index');
+Route::get('articleinfo', 'Api\ArticleinfoController@index');
+//Route::get('articleinfo/{id}', 'Api\ArticleinfoController@show');
+Route::post('article/{post_id}/comment', 'Api\ArticleinfoController@store');
+Route::delete('article/{a}/comment/{id}', 'Api\ArticleinfoController@destroy');
